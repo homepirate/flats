@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<body>
+<div>
+    <div>
+        <h1>{{ real_estate.name }}</h1>
+        <span> Год постройки {{ real_estate.parameters.yearofconstruction }}</span>
+        <span>{{ real_estate.addressid.city }}, {{ real_estate.addressid.district }}, {{ real_estate.addressid.street }}, {{ real_estate.addressid.housenumber }}</span>
+    </div>
+    <div>
+    фотки вставить
+    </div>
+    <div>
+        <div>
+            <div>{{ real_estate.price }} ₽</div>
+            <div>{{ real_estate.price }} ₽/м²</div>
+        </div>
+        <div>
+            <div>{{ real_estate.user.name }}</div>
+            <div>{{ real_estate.user.email }}</div>
+            <div> {{ real_estate.user.status.rating }}</div>
+        </div>
+
+        ЭТО НАДО ПРАВИТЬ ПОД НОВУЮ ТАБЛИЦУ
+<!--        <div>-->
+<!--            <div>{{ real_estate.user.status.name }}</div>-->
+<!--            {{ if real_estate.user.status.companyname != None }}-->
+<!--            <div> <a class="button" href="{{ re.user.status.website }}">{{ real_estate.user.status.companyname }}</a></div>-->
+<!--            {{% else %}}-->
+<!--            {{ endif}}-->
+<!--            {{ if real_estate.user.status.workexperience != None }}-->
+<!--            <div>{{ real_estate.user.status.workexperience }}</div>-->
+<!--            {{% else %}}-->
+<!--            {{ endif}}-->
+<!--        </div>-->
+    </div>
+    <div>
+        <div>
+            <div>{{ real_estate.square }}</div>
+            <div>Общая площадь</div>
+        </div>
+        <div>
+            <div>{{ real_estate.parameters.floor }}</div>
+            <div>Этаж</div>
+        </div>
+        <div>
+            <div>{{ real_estate.numberofrooms }}</div>
+            <div>Колличество комнат</div>
+        </div>
+    </div>
+    <div>
+        Общая информация
+        <div>
+            <ul>
+                <li>
+                    <span>Количество санузлов</span>
+                    <span>{{ real_estate.parameters.numberofbathrooms }}</span>
+                </li>
+                <li>
+                    <span>Высота потолков</span>
+                    <span>{{real_estate.parameters.ceilingheight }}</span>
+                </li>
+                <li>
+                    <span>Колличество балконов</span>
+                    <span>{{ real_estate.parameters.balcony }}</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+</body>
+{% endblock %}

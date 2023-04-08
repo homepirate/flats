@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div>
+    <section>
+        <div>
+            <div>
+                <div>Avatar</div>
+            </div>
+            <div>
+                <span>{{ user[0].name }} {{ user[0].surname }}</span>
+            </div>
+        </div>
+        <div>
+            <div>
+                <ul> ЭТО РЕЙТИНГ ЕГО НАДО СДЕЛАТЬ!!!!!
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                </ul>
+                <div><p>{{ user[0].status.rating }} из 5</p></div>
+            </div>
+            <div>{% if user[0].status.title == "owner" %}
+                <div>
+                    <div>
+                        <p>Статус</p>
+                        <p>Владелец</p>
+                    </div>
+                    <div>
+                    <p>Аккаунт проверен</p>
+                    { if user[0].status.verified == True }
+                        <p>Да</p>
+                    {% else %}
+                    <p>Нет</p>
+                    {% endif %}
+                    </div>
+                </div>
+                {% elif user[0].status.title == "realtor" %}
+                 <div>
+                    <div>
+                        <p>Статус</p>
+                        <p>Риелтор</p>
+                    </div>
+                    <div>
+                    <p>Опыт работы</p>
+                    <p>с {{ user[0].status.yearsw }} года</p>
+                    </div>
+                </div>
+                {% else %}
+                <div>
+                    <div>
+                        <p>Статус</p>
+                        <p>Компания</p>
+                    </div>
+                     <div>
+                        <p>Название компании</p>
+                        <p>{{ user[0].status.companyname}}</p>
+                    </div>
+                     <div>
+                        <p>Опыт работы</p>
+                        <p>с {{ user[0].status.yearsw }} года</p>
+                    </div>
+                    {% if user[0].status.website != None %}
+                    <div>
+                        <p>Веб-сайт</p>
+                        <p>{{ user[0].status.website }}</p>
+                    </div>
+                    {% else %}
+                    {% endif %}
+                </div>
+            {% endif %}</div>
+        </div>
+    </section>
+    <section>
+
+    </section>
+</div>
+{% endblock %}

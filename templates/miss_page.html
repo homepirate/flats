@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<body>
+<article id="article" class="info">
+    <h1 class="title">Страница не найдена</h1>
+    <h5 class="subtitle">Возможно, у вас опечатка в адресе страницы, или её просто не существует :(</h5>
+    <div class="button-container">
+        <a class="button" href="{{ url_for('home_page') }}">Перейти на главную</a>
+    </div>
+    <h5 class="error-code">Ошибка 404</h5>
+</article>
+</body>
+{% endblock %}

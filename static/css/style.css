@@ -1,0 +1,23 @@
+header h1 {
+  font-size: 70px;
+  font-weight: 600;
+  background-image: linear-gradient(to left, #0000ff, #4040ff);
+  color: blue;
+  background-clip: text;
+  -webkit-background-clip: text;
+  text-align: center;
+  text-shadow: 3px 0 3px #fff;
+  -webkit-text-stroke: 1px white;
+}
+hr{
+    margin: 20px 0;
+	padding: 0;
+	height: 10px;
+	border: none;
+	border-top: 1px solid #004ccc;
+	box-shadow: 5px 10px 10px -10px #fff inset;
+}
+
+body {
+    background-color: #529eff;
+}
