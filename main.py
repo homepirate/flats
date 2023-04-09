@@ -1,7 +1,11 @@
 from fastapi import FastAPI, Request
+from fastapi_users import FastAPIUsers
 from starlette.staticfiles import StaticFiles
 
-from models import Realestate, User, Address
+from auth.auth import auth_backend
+from auth.manager import get_user_manager
+from auth.schemas import UserRead, UserCreate
+from models import Realestate, Address, User
 from router import *
 
 app = FastAPI()
@@ -10,7 +14,22 @@ app.mount('/static', StaticFiles(directory='static'), name='static')
 templates = Jinja2Templates(directory="templates")
 
 
+fastapi_users = FastAPIUsers[User, int](
+    get_user_manager,
+    [auth_backend],
+)
+
 app.include_router(router_users)
+app.include_router(
+    fastapi_users.get_auth_router(auth_backend),
+    prefix="/auth/jwt",
+    tags=["auth"],
+)
+app.include_router(
+    fastapi_users.get_register_router(UserRead, UserCreate),
+    prefix="/auth",
+    tags=["auth"],
+)
 
 
 @app.get("/{re_page}")
@@ -45,3 +64,7 @@ def home_page(request: Request, session: AsyncSession = Depends(get_async_sessio
         },
         status_code=200
     )
+
+
+
+# @app.get("/registration")

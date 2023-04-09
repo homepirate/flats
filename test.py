@@ -108,7 +108,7 @@ class User(Base):
     id = Column(INTEGER, primary_key=True)
     statusid = Column(INTEGER, ForeignKey("status.id"))
     # page = Column(INTEGER, nullable=False)
-    # login = Column(String, nullable=True)
+    # login = Column(String, nullable=False)
     # password = Column(String, nullable=False)
     name = Column(String, nullable=False)
     # surname = Column(String, nullable=False)
@@ -189,6 +189,5 @@ def get():
     #
     r = session.query(User).all()
     print(r[1].status.companyname)
-
 get()
 

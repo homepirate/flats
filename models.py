@@ -2,6 +2,7 @@ from database import Base
 
 from sqlalchemy import INTEGER, String, Column, FLOAT, ForeignKey, BOOLEAN
 from sqlalchemy.orm import relationship
+from fastapi_users.db import SQLAlchemyBaseUserTable
 
 
 class Status(Base):
@@ -63,18 +64,21 @@ class Owner(Status):
         return str(self.__dict__)
 
 
-class User(Base):
+class User(SQLAlchemyBaseUserTable[int], Base):
     __tablename__ = "user"
 
     id = Column(INTEGER, primary_key=True)
     statusid = Column(INTEGER, ForeignKey("status.id"))
     page = Column(INTEGER, nullable=False)
-    login = Column(String, nullable=True)
-    password = Column(String, nullable=False)
+    login = Column(String, nullable=False)
+    hashed_password = Column(String, nullable=False)
     name = Column(String, nullable=False)
     surname = Column(String, nullable=False)
     email = Column(String, nullable=False)
     phonenumber = Column(INTEGER, nullable=False)
+    is_active = Column(BOOLEAN, default=True, nullable=False)
+    is_superuser = Column(BOOLEAN, default=False, nullable=False)
+    is_verified = Column(BOOLEAN, default=False, nullable=False)
     status = relationship("Status", back_populates="user", uselist=False)
     realestate = relationship("Realestate", back_populates="user")
 
