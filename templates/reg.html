@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<script></script>
+<link rel="stylesheet" href="{{ url_for('static', path='css/style2.css') }}">
+
+<form>
+  <input checked="" id="signin" name="action" type="radio" value="signin">
+  <label for="signin">Sign in</label>
+  <input id="signup" name="action" type="radio" value="signup">
+  <label for="signup">Sign up</label>
+  <div id="wrapper">
+    <div id="arrow"></div>
+    <input id="login" placeholder="Login" type="text">
+    <input id="pass" placeholder="Password" type="password">
+    <input id="name" placeholder="Name" type="text">
+    <input id="surname" placeholder="Surname" type="text">
+    <input id="email" placeholder="Email" type="text">
+     <input id="phone" placeholder="800-555-35-35" pattern="[0-9]{3}-[0-9]{3}-[0-9]{2}-[0-9]{2}" type="tel">
+  </div>
+  <button type="submit">
+    <span>
+      <br>
+      Sign in
+      <br>
+      Sign up
+    </span>
+  </button>
+</form>
+<div id="hint">Click on the tabs</div>
+
+
+{% endblock %}

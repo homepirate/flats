@@ -37,7 +37,6 @@ class Status(Base):
     title = Column(String)
     rating = Column(INTEGER, nullable=True)
     user = relationship("User", back_populates="status", uselist=False)
-    # type = Column(String)
 
     __mapper_args__ = {
         'polymorphic_identity': 'status',
@@ -54,9 +53,6 @@ class Company(Status):
     __tablename__ = "company"
 
     statusid = Column(INTEGER, ForeignKey("status.id"), primary_key=True)
-    # id = Column(INTEGER, primary_key=True)
-    # title = Column(String)
-    # rating = Column(INTEGER, nullable=True)
     companyname = Column(String, nullable=False)
     website = Column(String, nullable=True)
     yearsw = Column(String, nullable=False)
@@ -71,9 +67,6 @@ class Realtor(Status):
     __tablename__ = "realtor"
 
     statusid = Column(INTEGER, ForeignKey("status.id"), primary_key=True)
-    # id = Column(INTEGER, primary_key=True)
-    # title = Column(String)
-    # rating = Column(INTEGER, nullable=True)
     yearsw = Column(String, nullable=False)
     __mapper_args__ = {
         'polymorphic_identity': 'realtor',
@@ -88,9 +81,6 @@ class Owner(Status):
     __tablename__ = "owner"
 
     statusid = Column(INTEGER, ForeignKey("status.id"), primary_key=True)
-    # id = Column(INTEGER, primary_key=True)
-    # title = Column(String)
-    # rating = Column(INTEGER, nullable=True)
     verified = Column(BOOLEAN, nullable=False)
     __mapper_args__ = {
         'polymorphic_identity': 'owner',
@@ -144,9 +134,10 @@ class Realestate(Base):
     square = Column(INTEGER, nullable=False)
     yearofconstruction = Column(INTEGER, nullable=False)
     numberofbathrooms = Column(INTEGER, nullable=False)
-    Ceilingheight = Column(FLOAT, nullable=False)
+    ceilingheight = Column(FLOAT, nullable=False)
     balcony = Column(INTEGER, nullable=True)
     numberofelevators = Column(INTEGER, nullable=True)
+    apartamentnumber = Column(INTEGER, nullable=False)
     user = relationship("User", back_populates="realestate")
     address = relationship("Address", back_populates="realestate", uselist=False)
 
@@ -172,9 +163,12 @@ def get():
     a = get_async_session()
     session = next(a)
 
-    # stmt = select(User, with_polymorphic(Status, [Owner, Realtor, Company])) \
-    #     .join(with_polymorphic(Status, [Owner, Realtor, Company]), User.statusid == Status.id).where(User.id == 1)
-    # r = session.execute(stmt).first()
+    # r = session.query(User, with_polymorphic(Status, [Owner, Realtor, Company])) \
+    #     .join(with_polymorphic(Status, [Owner, Realtor, Company]), User.statusid == Status.id).all()
+
+    r = session.query(with_polymorphic(Status, [Owner, Realtor, Company])).all()
+    for i in r:
+        print(i)
     # print(r[0].status)
     # for u in r:
     #     print(u)
@@ -186,8 +180,7 @@ def get():
     # r = session.query(Status).all()
     # for st in r:
     #     print(st.title, st.id,)
-    #
-    r = session.query(User).all()
-    print(r[1].status.companyname)
-get()
 
+    # r = session.query(User).all()
+    # print(r[1].status.companyname)
+get()

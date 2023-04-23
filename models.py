@@ -110,7 +110,7 @@ class Realestate(Base):
     square = Column(INTEGER, nullable=False)
     yearofconstruction = Column(INTEGER, nullable=False)
     numberofbathrooms = Column(INTEGER, nullable=False)
-    Ceilingheight = Column(FLOAT, nullable=False)
+    сeilingheight = Column(FLOAT, nullable=False)
     balcony = Column(INTEGER, nullable=True)
     numberofelevators = Column(INTEGER, nullable=True)
     user = relationship("User", back_populates="realestate")

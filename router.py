@@ -95,11 +95,11 @@ async def edit_user(id: int, data= Body(), session: AsyncSession = Depends(get_a
     return user
 
 
-@router_users.post("/")
-async def create_user(data = Body(), session: AsyncSession = Depends(get_async_session)):
-    person = User(login=data["login"], password=data["password"], name=data["name"], surname=data["surname"],
-                  email=data["email"])
-    session.add(person)
-    await session.commit()
-    await session.refresh(person)
-    return person
+# @router_users.post("/")
+# async def create_user(data = Body(), session: AsyncSession = Depends(get_async_session)):
+#     person = User(login=data["login"], password=data["password"], name=data["name"], surname=data["surname"],
+#                   email=data["email"])
+#     session.add(person)
+#     await session.commit()
+#     await session.refresh(person)
+#     return person

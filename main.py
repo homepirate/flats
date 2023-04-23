@@ -10,6 +10,7 @@ from router import *
 
 app = FastAPI()
 
+
 app.mount('/static', StaticFiles(directory='static'), name='static')
 templates = Jinja2Templates(directory="templates")
 
@@ -19,7 +20,11 @@ fastapi_users = FastAPIUsers[User, int](
     [auth_backend],
 )
 
+
+current_user = fastapi_users.current_user()
+
 app.include_router(router_users)
+
 app.include_router(
     fastapi_users.get_auth_router(auth_backend),
     prefix="/auth/jwt",
@@ -66,11 +71,9 @@ def home_page(request: Request, session: AsyncSession = Depends(get_async_sessio
     )
 
 
-current_user = fastapi_users.current_user()
-
-
-@app.get("/protected-route")
-def protected_route(user: User = Depends(current_user)):
+@app.get("/place-an-advertisement")
+def protected_route(request: Request, user: User = Depends(current_user)):
+    print(user)
     return f"Hello, {user.email}"
 
 
@@ -79,4 +82,12 @@ def unprotected_route():
     return f"Hello, user"
 
 
-# @app.get("/registration")
+@app.get("/registration")
+def registration(request: Request):
+    templates.TemplateResponse(
+        'reg.html',
+        {
+            "request": request,
+        },
+        status_code=200
+    )

@@ -1,3 +1,4 @@
+import random
 from typing import Optional
 
 from fastapi import Depends, Request
@@ -73,6 +74,7 @@ class UserManager(IntegerIDMixin, BaseUserManager[User, int]):
         stid = len(session.query(Status).all())
 
         user_dict["statusid"] = stid
+        user_dict["page"] = random.randint(10000, 99999)
         session.commit()
         created_user = await self.user_db.create(user_dict)
 
