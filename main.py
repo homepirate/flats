@@ -1,9 +1,7 @@
 from fastapi import FastAPI, Request
-from fastapi_users import FastAPIUsers
 from starlette.staticfiles import StaticFiles
 
-from auth.auth import auth_backend
-from auth.manager import get_user_manager
+from auth.auth import auth_backend, fastapi_users, current_user
 from auth.schemas import UserRead, UserCreate
 from models import Realestate, Address, User
 from router import *
@@ -14,14 +12,6 @@ app = FastAPI()
 app.mount('/static', StaticFiles(directory='static'), name='static')
 templates = Jinja2Templates(directory="templates")
 
-
-fastapi_users = FastAPIUsers[User, int](
-    get_user_manager,
-    [auth_backend],
-)
-
-
-current_user = fastapi_users.current_user()
 
 app.include_router(router_users)
 
@@ -37,9 +27,22 @@ app.include_router(
 )
 
 
+@app.get("/registration")
+def registration(request: Request):
+    return templates.TemplateResponse(
+        'reg.html',
+        {
+            "request": request,
+        },
+        status_code=200
+    )
+
+
 @app.get("/{re_page}")
-def get_real_estate_page(request: Request, re_page: int, session: AsyncSession = Depends(get_async_session)):
-    real_estate = session.query(Realestate).filter(Realestate.id == re_page).first()
+async def get_real_estate_page(request: Request, re_page: int, session: AsyncSession = Depends(get_async_session)):
+    q = select(Realestate).filter(Realestate.id == re_page)
+    real_estate = await session.execute(q)
+    real_estate = real_estate.first()
     if real_estate is None:
         return templates.TemplateResponse(
             "miss_page.html",
@@ -59,13 +62,14 @@ def get_real_estate_page(request: Request, re_page: int, session: AsyncSession =
 
 
 @app.get("/")
-def home_page(request: Request, session: AsyncSession = Depends(get_async_session)):
-    real_estate = session.query(Realestate).all()
+async def home_page(request: Request, session: AsyncSession = Depends(get_async_session)):
+    q = select(Realestate)
+    real_estate = await session.execute(q)
     return templates.TemplateResponse(
         'index.html',
         {
             "request": request,
-            "real_estate": real_estate,
+            "real_estate": real_estate.all(),
         },
         status_code=200
     )
@@ -81,13 +85,3 @@ def protected_route(request: Request, user: User = Depends(current_user)):
 def unprotected_route():
     return f"Hello, user"
 
-
-@app.get("/registration")
-def registration(request: Request):
-    templates.TemplateResponse(
-        'reg.html',
-        {
-            "request": request,
-        },
-        status_code=200
-    )

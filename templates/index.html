@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block content%}
+{% block content %}
 <body>
 {% for re in real_estate %}
 <div class="card">
@@ -33,6 +33,7 @@
             <span>{{ re.user.status.companyname }}<a href="{{ url_for('', page=re.user.status.page) }}">Посмотреть профиль</a></span>
             <span><a href="{{ re.user.status.website }}">{{ re.user.status.website.strip("https://") }}</a></span>
             <span>{{ re.user.status.rating }} из 5</span>
+        {% endif %}
     </div>
 </div>
 {% endfor %}

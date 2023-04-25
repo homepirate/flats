@@ -31,7 +31,7 @@ body {
 #signin:checked ~ #hint { bottom: 20px; }
 #signin:checked ~ button span { transform: translate3d(0,-72px,0); }
 
-#signup:checked ~ #wrapper { height: 500px; }
+#signup:checked ~ #wrapper { height: 505px; }
 #signup:checked ~ #wrapper #arrow { left: 137px; }
 #signup:checked ~ #hint { bottom: 400px; }
 #signup:checked ~ button span { transform: translate3d(0,-144px,0); }
