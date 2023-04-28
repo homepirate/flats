@@ -27,7 +27,7 @@ app.include_router(
 )
 
 
-@app.get("/registration")
+@app.get("/reg-auth")
 def registration(request: Request):
     return templates.TemplateResponse(
         'reg.html',
@@ -38,7 +38,26 @@ def registration(request: Request):
     )
 
 
-@app.get("/{re_page}")
+@app.get("/place-an-advertisement")
+def protected_route(request: Request, user: User = Depends(current_user)):
+    if user:
+        return templates.TemplateResponse(
+            "new_flat.html",
+            {
+                "request": request,
+            },
+            status_code=200
+        )
+    return templates.TemplateResponse(
+            "notauth.html",
+            {
+                "request": request,
+            },
+            status_code=404
+        )
+
+
+@app.get("/flat-{re_page}")
 async def get_real_estate_page(request: Request, re_page: int, session: AsyncSession = Depends(get_async_session)):
     q = select(Realestate).filter(Realestate.id == re_page)
     real_estate = await session.execute(q)
@@ -73,12 +92,6 @@ async def home_page(request: Request, session: AsyncSession = Depends(get_async_
         },
         status_code=200
     )
-
-
-@app.get("/place-an-advertisement")
-def protected_route(request: Request, user: User = Depends(current_user)):
-    print(user)
-    return f"Hello, {user.email}"
 
 
 @app.get("/unprotected-route")

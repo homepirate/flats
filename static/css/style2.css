@@ -1,3 +1,4 @@
+<style>
 @import url(http://fonts.googleapis.com/css?family=Raleway:700,800);
 
 html, body { margin: 0; }
@@ -31,10 +32,12 @@ body {
 #signin:checked ~ #hint { bottom: 20px; }
 #signin:checked ~ button span { transform: translate3d(0,-72px,0); }
 
-#signup:checked ~ #wrapper { height: 505px; }
+#signup:checked ~ #wrapper { height: 550px; }
 #signup:checked ~ #wrapper #arrow { left: 137px; }
 #signup:checked ~ #hint { bottom: 400px; }
 #signup:checked ~ button span { transform: translate3d(0,-144px,0); }
+
+
 
 form {
   width: 450px;
@@ -45,7 +48,7 @@ form {
   top: 50%;
 }
 
-input[type=radio] { display: none; }
+input[type=radio][name=action] { display: none; }
 
 label {
   cursor: pointer;
@@ -56,6 +59,18 @@ label {
   margin-bottom: 30px;
   text-transform: uppercase;
 }
+
+p{
+font-size: 27px;
+  font-family: 'Raleway', sans-serif;
+  width: 99.5%;
+  margin-top: 3px;
+  margin-bottom: 0px;
+  opacity: 1;
+  text-indent: 15px;
+  transition: all .2s ease-in-out;
+}
+
 label:hover {
   transition: all .3s cubic-bezier(.6,0,.4,1);
   opacity: 1;
@@ -65,7 +80,9 @@ input[type=radio]:checked + label { opacity: 1; }
 
 input[type=text],
 input[type=tel],
-input[type=password] {
+input[type=password],
+#year
+{
   background: #fff;
   border: none;
   border-radius: 8px;
