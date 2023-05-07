@@ -39,12 +39,18 @@ def registration(request: Request):
 
 
 @app.get("/place-an-advertisement")
-def protected_route(request: Request, user: User = Depends(current_user)):
-    if user:
+async def protected_route(request: Request, user: User = Depends(current_user), session: AsyncSession = Depends(get_async_session)):
+    if not user:
+        # q = select(Address)
+        # address = await session.execute(q)
+        # address = address.all()
+        # address_array = [f'{i[0].city}, {i[0].district}, {i[0].street}, {i[0].housenumber}' for i in address]
+
         return templates.TemplateResponse(
             "new_flat.html",
             {
                 "request": request,
+                # "address": address_array,
             },
             status_code=200
         )
@@ -56,6 +62,9 @@ def protected_route(request: Request, user: User = Depends(current_user)):
             status_code=404
         )
 
+@app.post("add-flat")
+async def add_new_flat():
+    pass
 
 @app.get("/flat-{re_page}")
 async def get_real_estate_page(request: Request, re_page: int, session: AsyncSession = Depends(get_async_session)):
@@ -78,7 +87,6 @@ async def get_real_estate_page(request: Request, re_page: int, session: AsyncSes
         },
         status_code=200
     )
-
 
 @app.get("/")
 async def home_page(request: Request, session: AsyncSession = Depends(get_async_session)):

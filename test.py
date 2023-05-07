@@ -110,6 +110,7 @@ class User(Base):
     def __repr__(self):
         return str(self.__dict__)
 
+
 class Address(Base):
     __tablename__ = "address"
 
@@ -162,12 +163,19 @@ def add():
 def get():
     a = get_async_session()
     session = next(a)
-
+    # session.add(Address(city="VOSW", district="dfdfd", street="ssf", housenumber="11"))
+    # session.add(Address(city="VOadaSW", district="dadafdfd", street="ssssf", housenumber="111"))
     # r = session.query(User, with_polymorphic(Status, [Owner, Realtor, Company])) \
     #     .join(with_polymorphic(Status, [Owner, Realtor, Company]), User.statusid == Status.id).all()
 
     # r = session.query(with_polymorphic(Status, [Owner, Realtor, Company])).all()
     r = session.query(User, Realestate).where(User.name == "Oleg").filter(User.id == Realestate.userid).all()
+    # q = select(Address)
+    # address = session.execute(q)
+    # address = address.all()
+    # print(address)
+    # address_array = [f'{i[0].city}, {i[0].district}, {i[0].street}, {i[0].housenumber}' for i in address]
+    # print(address_array)
     for i in r:
         print(i)
     # print(r[0].status)

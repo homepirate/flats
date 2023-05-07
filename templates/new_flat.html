@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<script>
+  function add_year(){
+      for (let year = 1890; year <= 2023; year++) {
+      let options = document.createElement("OPTION");
+      document.getElementById("year").appendChild(options).innerHTML = year;
+      }
+  }
+  function add_address(){
+  }
+
+    function main_func(){
+    add_year();
+    add_address();
+    }
+
+   window.onload = main_func;
+</script>
+<link rel="stylesheet" href="{{ url_for('static', path='css/style2.css') }}">
+
+<form>
+    <div id="arrow"></div>
+    <input id="name" placeholder="Название" type="text">
+    <input id="numberofrooms" placeholder="Колличество комнат" type="text">
+    <input id="floor" placeholder="Этаж" type="text">
+    <input id="square" placeholder="Площадь" type="text">
+    <input id="numberofbathrooms" placeholder="Колличество ванных комнат" type="text">
+     <input id="сeilingheight" placeholder="Высота потолков" type="text">
+    <input id="balcony" placeholder="Колличество балконов" type="text">
+    <input id="numberofelevators" placeholder="Колличество лифтов" type="text">
+    <p>Год постройки дома</p><select id="year"></select>
+  <button>
+    <span>
+        Добавить
+    </span>
+  </button>
+</form>
+{% endblock %}
