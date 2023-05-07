@@ -57,21 +57,31 @@ class UserManager(IntegerIDMixin, BaseUserManager[User, int]):
             user_dict.pop("website")
             user_dict.pop("yearsw")
             verified = user_dict.pop("verified")
-            session.add(Owner(title=title, verified=verified))
+            c = Owner(title=title, verified=verified)
+            session.add(c)
+            session.commit()
+            session.refresh(c)
+            stid = c.id
         elif title == "realtor":
             user_dict.pop("companyname")
             user_dict.pop("website")
             user_dict.pop("verified")
             yearsw = user_dict.pop("yearsw")
-            session.add(Realtor(title=title, yearsw=yearsw))
+            c = Realtor(title=title, yearsw=yearsw)
+            session.add(c)
+            session.commit()
+            session.refresh(c)
+            stid = c.id
         else:
             user_dict.pop("verified")
             companyname = user_dict.pop("companyname")
             website = user_dict.pop("website")
             yearsw = user_dict.pop("yearsw")
-            session.add(Company(title=title, companyname=companyname, website=website, yearsw=yearsw))
-
-        stid = len(session.query(Status).all())
+            c = Company(title=title, companyname=companyname, website=website, yearsw=yearsw)
+            session.add(c)
+            session.commit()
+            session.refresh(c)
+            stid = c.id
 
         user_dict["statusid"] = stid
         user_dict["page"] = random.randint(10000, 99999)

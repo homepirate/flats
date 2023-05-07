@@ -137,7 +137,7 @@ class Realestate(Base):
     ceilingheight = Column(FLOAT, nullable=False)
     balcony = Column(INTEGER, nullable=True)
     numberofelevators = Column(INTEGER, nullable=True)
-    apartamentnumber = Column(INTEGER, nullable=False)
+    # apartamentnumber = Column(INTEGER, nullable=False)
     user = relationship("User", back_populates="realestate")
     address = relationship("Address", back_populates="realestate", uselist=False)
 
@@ -166,7 +166,8 @@ def get():
     # r = session.query(User, with_polymorphic(Status, [Owner, Realtor, Company])) \
     #     .join(with_polymorphic(Status, [Owner, Realtor, Company]), User.statusid == Status.id).all()
 
-    r = session.query(with_polymorphic(Status, [Owner, Realtor, Company])).all()
+    # r = session.query(with_polymorphic(Status, [Owner, Realtor, Company])).all()
+    r = session.query(User, Realestate).where(User.name == "Oleg").filter(User.id == Realestate.userid).all()
     for i in r:
         print(i)
     # print(r[0].status)
