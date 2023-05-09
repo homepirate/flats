@@ -1,4 +1,3 @@
-<style>
 @import url(http://fonts.googleapis.com/css?family=Raleway:700,800);
 
 html, body { margin: 0; }
@@ -81,6 +80,7 @@ input[type=radio]:checked + label { opacity: 1; }
 input[type=text],
 input[type=tel],
 input[type=password],
+#address,
 #year
 {
   background: #fff;

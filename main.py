@@ -1,9 +1,9 @@
 from fastapi import FastAPI, Request
 from starlette.staticfiles import StaticFiles
-
 from auth.auth import auth_backend, fastapi_users, current_user
 from auth.schemas import UserRead, UserCreate
 from models import Realestate, Address, User
+from schemas import ReModel
 from router import *
 
 app = FastAPI()
@@ -41,6 +41,7 @@ def registration(request: Request):
 @app.get("/place-an-advertisement")
 async def protected_route(request: Request, user: User = Depends(current_user), session: AsyncSession = Depends(get_async_session)):
     if not user:
+    # if user:
         # q = select(Address)
         # address = await session.execute(q)
         # address = address.all()
@@ -50,6 +51,7 @@ async def protected_route(request: Request, user: User = Depends(current_user), 
             "new_flat.html",
             {
                 "request": request,
+                "fff": "SSSSSSSSSSSSSSS"
                 # "address": address_array,
             },
             status_code=200
@@ -63,7 +65,7 @@ async def protected_route(request: Request, user: User = Depends(current_user), 
         )
 
 @app.post("add-flat")
-async def add_new_flat():
+async def add_new_flat(re: ReModel):
     pass
 
 @app.get("/flat-{re_page}")

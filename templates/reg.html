@@ -42,8 +42,8 @@
     if (rb[0].checked){
     var data = {
     "grant_type0": "",
-    "username": document.getElementsByName("email"),
-    "password": document.getElementsByName("pass"),
+    "username": document.getElementsById("email"),
+    "password": document.getElementsById("pass"),
     "scope":"",
     "client_id":"",
     "client_secret": ""
@@ -78,7 +78,7 @@
      data.append("is_verified", false)
      data.append("title", rbs[1].value)
      data.append("verified", false)
-     data.append("yearsw", document.getElementsById("yearsw"))
+     data.append("yearsw", document.getElementsById("year").value)
      data.append("companyname", document.getElementsById("companyname"))
      data.append("website", document.getElementsById("website"))
      data.append("statusid", 0)
@@ -96,7 +96,7 @@
      data.append("is_verified", false)
      data.append("title", rbs[2].value)
      data.append("verified", false)
-     data.append("yearsw", document.getElementsById("yearsw"))
+     data.append("yearsw", document.getElementsById("year").value)
      data.append("companyname","string")
      data.append("website", "string")
      data.append("statusid", 0)
