@@ -12,3 +12,4 @@ class ReModel(BaseModel):
     сeilingheight: float
     balcony: int
     numberofelevators: int
+    apartamentnumber = int

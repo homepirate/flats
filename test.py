@@ -1,6 +1,6 @@
 import os.path
 
-from sqlalchemy import MetaData, ForeignKey, select
+from sqlalchemy import MetaData, ForeignKey, select, delete, func
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, with_polymorphic, selectin_polymorphic
 from sqlalchemy.orm import declarative_base
@@ -135,7 +135,7 @@ class Realestate(Base):
     square = Column(INTEGER, nullable=False)
     yearofconstruction = Column(INTEGER, nullable=False)
     numberofbathrooms = Column(INTEGER, nullable=False)
-    ceilingheight = Column(FLOAT, nullable=False)
+    Ceilingheight = Column(FLOAT, nullable=False)
     balcony = Column(INTEGER, nullable=True)
     numberofelevators = Column(INTEGER, nullable=True)
     # apartamentnumber = Column(INTEGER, nullable=False)
@@ -163,21 +163,88 @@ def add():
 def get():
     a = get_async_session()
     session = next(a)
-    # session.add(Address(city="VOSW", district="dfdfd", street="ssf", housenumber="11"))
-    # session.add(Address(city="VOadaSW", district="dadafdfd", street="ssssf", housenumber="111"))
+    session.add(Address(city="VOSW", district="dfdfd", street="ssf", housenumber="11"))
+    session.add(Address(city="VOadaSW", district="dadafdfd", street="ssssf", housenumber="111"))
     # r = session.query(User, with_polymorphic(Status, [Owner, Realtor, Company])) \
     #     .join(with_polymorphic(Status, [Owner, Realtor, Company]), User.statusid == Status.id).all()
+    session.add(Realestate(userid=2, addressid=1, name="name",
+                           numberofrooms=1, price=1, floor=1, square=1, yearofconstruction=1,
+                           numberofbathrooms=1, balcony=1, Ceilingheight=1, numberofelevators=1))
+
+    session.add(Realestate(userid=2, addressid=1, name="nam2222e",
+                           numberofrooms=1, price=1, floor=1, square=1, yearofconstruction=1,
+                           numberofbathrooms=1, balcony=1, Ceilingheight=1, numberofelevators=1))
 
     # r = session.query(with_polymorphic(Status, [Owner, Realtor, Company])).all()
-    r = session.query(User, Realestate).where(User.name == "Oleg").filter(User.id == Realestate.userid).all()
+    # r = session.query(User, Realestate.name).where(User.name == "Pasha").join(Realestate, User.id == Realestate.userid).all()
     # q = select(Address)
     # address = session.execute(q)
     # address = address.all()
     # print(address)
     # address_array = [f'{i[0].city}, {i[0].district}, {i[0].street}, {i[0].housenumber}' for i in address]
     # print(address_array)
-    for i in r:
-        print(i)
+    # q = select(User, Realestate).where(User.name == "Pasha").join(Realestate, User.id == Realestate.userid)
+    # q = select(User, Realestate).where(User.name == "Pasha").join(User.realestate)
+    # r = session.execute(q)
+    # r = r.all()
+    # print(r)
+    # data = [{"id": i[0].id, "name": i[0].name,
+    #         "rename": i[1].name} for i in r]
+    # print(data)
+    #
+    # q = select(Realestate, Address).join(Address, Realestate.addressid == Address.id).order_by(Realestate.price)
+    # resp = session.execute(q)
+    # resp = resp.all()
+    # for i in resp:
+    #     print(i[0].name, i[1].city)
+    # for i in r:
+    #     print(i[0], i[0].id, i[1])
+
+    # ow = Owner(title="owner", verified=True)
+    # session.add(ow)
+    # session.commit()
+    # session.refresh(ow)
+    #
+    # u = User(name="BOSS", statusid=ow.id)
+    # session.add(u)
+    # session.commit()
+    # session.refresh(u)
+    # uid = u.id
+    # print(session.query(User).where(User.name=="BOSS").all())
+
+    # print(f'{uid=}')
+    # print(session.query(User).where(User.id==uid).delete())
+    # print(session.query(User).all())
+    #
+    # q = delete(User).where(User.id==3)
+    # session.execute(q)
+    # print(session.query(User).all())
+    # print(session.query(User).where(User.id==uid).all())
+    # session.commit()
+    # print(session.query(Status).all())
+
+    # q = select(User.statusid).where(User.id == 1)
+    # resp = session.execute(q)
+    # resp = resp.first()
+    # print(resp[0])
+    #
+    # q = select(User)
+    # resp = session.execute(q)
+    # resp = resp.all()
+    # for i in resp:
+    #     print(i[0])
+
+    stmt = select(User, with_polymorphic(Status, [Owner, Realtor, Company])) \
+        .join(with_polymorphic(Status, [Owner, Realtor, Company]), User.statusid == Status.id)
+
+    stmt = session.execute(stmt)
+    stmt = stmt.all()
+    for i in stmt:
+        print(i[0].status.yearsw)
+    # r = select(Realestate).join(Realestate.address)
+    # r = session.execute(r)
+    # r = r.all()
+    # print(r)
     # print(r[0].status)
     # for u in r:
     #     print(u)

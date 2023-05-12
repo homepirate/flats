@@ -3,7 +3,7 @@ from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm import declarative_base
 from sqlalchemy.pool import NullPool
-import asyncio
+
 
 from config import DB_PORT, DB_HOST, DB_NAME, DB_PASS, DB_USER
 

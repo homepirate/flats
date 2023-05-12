@@ -113,5 +113,6 @@ class Realestate(Base):
     сeilingheight = Column(FLOAT, nullable=False)
     balcony = Column(INTEGER, nullable=True)
     numberofelevators = Column(INTEGER, nullable=True)
+    apartamentnumber = Column(INTEGER, nullable=False)
     user = relationship("User", back_populates="realestate")
     address = relationship("Address", back_populates="realestate", uselist=False)
